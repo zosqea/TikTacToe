@@ -1,11 +1,10 @@
-tikTacToe(5, 3);
+tikTacToe(3, 3);
 function tikTacToe(size, winCount) {
     var turn = 0;
     var board = new Array(size * size);
-    var body = document.querySelector('body');
+    var body = document.getElementById('backGroundBoard');
     var boardTable = document.createElement('table');
     body === null || body === void 0 ? void 0 : body.append(boardTable);
-    console.log("You is suckballser");
     boardTable.setAttribute('id', 'board');
     var _loop_1 = function (i) {
         var tempTR = document.createElement('tr');
@@ -15,6 +14,7 @@ function tikTacToe(size, winCount) {
             var tempTD = document.createElement('td');
             tempTD.setAttribute('id', "cell".concat(i * size + j));
             tempTD.onclick = function (ev) {
+                var _a, _b;
                 var symbol;
                 if (turn % 2 == 0) {
                     symbol = "X";
@@ -30,20 +30,20 @@ function tikTacToe(size, winCount) {
                 turn++;
                 tempTD.onclick = null;
                 var result = check(size, winCount, board);
-                //if(result == 1) window.alert("X WON");
                 if (result == 1) {
                     var message = document.createElement('text');
-                    body === null || body === void 0 ? void 0 : body.append(message);
+                    (_a = document.getElementById('winnerText')) === null || _a === void 0 ? void 0 : _a.append(message);
                     message.innerText = 'The winner is X';
                     message.setAttribute('style', 'font-size: 180px;');
+                    diableAllListeners(size);
                 }
                 if (result == -1) {
                     var message = document.createElement('text');
-                    body === null || body === void 0 ? void 0 : body.append(message);
+                    (_b = document.getElementById('winnerText')) === null || _b === void 0 ? void 0 : _b.append(message);
                     message.innerText = 'The winner is O';
                     message.setAttribute('style', 'font-size: 180px;');
+                    diableAllListeners(size);
                 }
-                //if(result == -1) window.alert("O WON");
             };
             tempTR.append(tempTD);
         };
@@ -149,4 +149,11 @@ function check(size, winCount, board) {
         console.log(counter);
     }
     return 0;
+}
+function diableAllListeners(size) {
+    for (var i = 0; i < size; i++) {
+        for (var j = 0; j < size; j++) {
+            document.getElementById("cell".concat(i * size + j)).onclick = null;
+        }
+    }
 }

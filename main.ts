@@ -1,12 +1,11 @@
-tikTacToe(5, 3);
+tikTacToe(3, 3);
 
 function tikTacToe(size:number, winCount:number):void{
   let turn:number = 0;
   let board:number[] = new Array<number>(size*size);
-  let body = document.querySelector('body');
+  let body = document.getElementById('backGroundBoard');
   let boardTable = document.createElement('table');
   body?.append(boardTable);
-  console.log("You is suckballser");
   boardTable.setAttribute('id','board');
   for (let i = 0; i < size; i++) {
     let tempTR = document.createElement('tr');
@@ -32,20 +31,20 @@ function tikTacToe(size:number, winCount:number):void{
         turn++;
         tempTD.onclick = null;
         let result = check(size, winCount,board)
-        //if(result == 1) window.alert("X WON");
         if(result == 1){
           let message = document.createElement('text');
-          body?.append(message);
+          document.getElementById('winnerText')?.append(message);
           message.innerText = 'The winner is X';
           message.setAttribute('style', 'font-size: 180px;');
+          diableAllListeners(size);
         }
         if(result == -1){
           let message = document.createElement('text');
-          body?.append(message);
+          document.getElementById('winnerText')?.append(message);
           message.innerText = 'The winner is O';
           message.setAttribute('style', 'font-size: 180px;');
+          diableAllListeners(size);
         }
-        //if(result == -1) window.alert("O WON");
       };
       tempTR.append(tempTD);
     }
@@ -137,4 +136,12 @@ function check(size:number, winCount:number, board:number[]):number{
     console.log(counter);
   }
   return 0;
+}
+
+function diableAllListeners(size:number):void{
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
+      document.getElementById(`cell${i*size+j}`)!.onclick = null;
+    }
+  }
 }
